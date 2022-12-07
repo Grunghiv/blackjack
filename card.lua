@@ -1,18 +1,18 @@
-function Card:initialize(suit, value)
-    Card = {}
-    self.suit = suit
-    self.value = value
-    self.image = love.graphics.newImage('assets/cards/'..suit..value..'.png')
-    self.__index = self
+require "card"
+require "mouse_functions"
 
+function love.load()
+    love.window.setMode(1280, 720, {vsync = true})
+    NewCard = Card:new(Card, 'c', '4')
 end
 
-function Card:setSuit(suit)
-    self.suit = suit
-
+function love.update(dt)
+    if NewCard.dragging.active then
+        NewCard.x = love.mouse.getX() - NewCard.dragging.diffX
+        NewCard.y = love.mouse.getY() - NewCard.dragging.diffY
+    end
 end
 
-function Card:setValue(value)
-    self.value = value
-
+function love.draw()
+    
 end
