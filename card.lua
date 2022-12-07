@@ -1,18 +1,34 @@
-require "card"
-require "mouse_functions"
+Card = {suit = '', value = ''}
 
-function love.load()
-    love.window.setMode(1280, 720, {vsync = true})
-    NewCard = Card:new(Card, 'c', '4')
+function Card:new(o, suit, value)
+    Card = o or {}
+    setmetatable(Card, self)
+    self.__index = self
+    self.suit = suit
+    self.value = value
+    self.image = love.graphics.newImage('assets/cards/'..suit..value..'.png')
+    self.x = 10
+    self.y = 10
+    self.width = self.image:getWidth()
+    self.height = self.image:getHeight()
+    self.dragging = {active = false, diffX = 0, diffY = 0}
+    return Card
+
 end
 
-function love.update(dt)
-    if NewCard.dragging.active then
-        NewCard.x = love.mouse.getX() - NewCard.dragging.diffX
-        NewCard.y = love.mouse.getY() - NewCard.dragging.diffY
-    end
+function Card:update(o)
+    o.image = love.graphics.newImage('assets/cards/'..o.suit..o.value..'.png')
+    return o
 end
 
-function love.draw()
-    
+function Card:setSuit(o, suit)
+    o.suit = suit
+    return o
+
+end
+
+function Card:setValue(o, value)
+    o.value = value
+    return o
+
 end
